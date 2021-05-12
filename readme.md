@@ -24,16 +24,16 @@ Swagger URL: http://localhost:8080/swagger-ui.html
 - Post
     - Request Body
 
-### Lab
- - String name
- - String address
- - String phone
- - String pincode
-
  ### Test
  - String name
  - String description
  - Double price
+
+ ### Lab
+ - String name
+ - String address
+ - String phone
+ - String pincode
 
 
 ### Admin
