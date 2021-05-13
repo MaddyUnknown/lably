@@ -7,58 +7,49 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Iterator;
 import com.xfactor.lably.entity.Admin;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController{
 
-    private Map<String, Admin> AdminMap = new HashMap<String, Admin>();       // Map to store the details in username: object pair
+    private List<Admin> AdminList = new ArrayList<Admin>();       // List to store the details in admin
 
-    @GetMapping("")                                                           // Get request to get all the admin users
-    public Map<String, Admin> AllUser()
-    {
-        return AdminMap;
-    }
 
-    @GetMapping("/first5")                                                    // Return 5 admin details in list format
-    public List<Admin> User5()
+    @GetMapping("")                                              // Return 5 admin details
+    public List<Admin> first5()
     {
-        List<Admin> adminList = new ArrayList<Admin>();
+        List<Admin> out = new ArrayList<Admin>();
         
-        int length = 0;
-        Iterator<String> i = AdminMap.keySet().iterator();
-        while(i.hasNext() && length<5)
-        {
-            adminList.add(AdminMap.get(i.next()));
-            length += 1;
-        }
-        return adminList;
+        int size = 5;
+        if(5>AdminList.size())
+            size = AdminList.size();
+        for(int i=0; i<size; i++)
+            out.add(AdminList.get(i));
+        return out;
         
     }
 
-    @GetMapping("/user")                                                      // return admin details based to username parameter
+    @GetMapping("/search")                                      // return admin details based to username parameter
     public Admin User(@RequestParam String username)
     {
-        return AdminMap.get(username);
+        Admin out= null;
+        for(int i=0; i<AdminList.size(); i++)
+        {
+            if(AdminList.get(i).getUsername().equalsIgnoreCase(username))
+            {
+                out = AdminList.get(i);
+                break;
+            }
+        }
+        return out;
     }
 
     @PostMapping("/addAdmin")                                                 // Post request to add admin details
-    public String addName(@RequestBody Admin obj)
+    public void addName(@RequestBody Admin obj)
     {
-        if(AdminMap.containsKey(obj.getUsername()))
-        {
-            return "Error!! Username already taken!!";
-        }
-        else
-        {
-            AdminMap.put(obj.getUsername(), obj);
-            return "New Admin Added";
-        }
+        AdminList.add(obj);
     }
 }

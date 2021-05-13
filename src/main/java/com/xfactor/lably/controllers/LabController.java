@@ -7,57 +7,49 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Iterator;
 import com.xfactor.lably.entity.Lab;
 
 @RestController
 @RequestMapping("/lab")
 public class LabController{
 
-    private Map<String, Lab> labMap = new HashMap<String, Lab>();   // Map to store the name: lab object pair
+    private List<Lab> LabList = new ArrayList<Lab>();   // List to store the lab information
 
-    @GetMapping("")                                                 // Get request to display all labs in map format
-    public Map<String, Lab> allLab()
+    @GetMapping("")                                     // Display 5 labs details in list format
+    public List<Lab> first5()
     {
-        return labMap;
-    }
+        List<Lab> out = new ArrayList<Lab>();
+        int size = 5;
+        if(LabList.size()<5)
+            size = LabList.size();
 
-    @GetMapping("/first5")                                          // Display 5 labs details in list format
-    public List<Lab> unique_lab5()
-    {
-        List<Lab> LabList = new ArrayList<Lab>();
-        int length = 0;
-        Iterator<String> i = labMap.keySet().iterator();
-        while(i.hasNext() && length<5)
-        {
-            LabList.add(labMap.get(i.next()));
-            length += 1;
-        }
-        return LabList;
+        for(int i=0; i<size; i++)
+            out.add(LabList.get(i));
+        
+        return out;
     }
 
 
-    @GetMapping("/lab")                                             // Accepts name as parameter to get the object
+    @GetMapping("/search")                              // Accepts name as parameter to get the object
     public Lab unique_lab(@RequestParam String name)
     {
-        return labMap.get(name);
+        Lab  out = null;
+        for(int i=0; i<LabList.size(); i++)
+        {
+            if(LabList.get(i).getName().equalsIgnoreCase(name))
+            {
+                out = LabList.get(i);
+                break;
+            }
+        }
+        return out;
     }
 
-    @PostMapping("/addLab")                                         // Post request to add the details of lab
-    public String addLab(@RequestBody Lab obj)
+    @PostMapping("/addLab")                           // Post request to add the details of lab
+    public void addLab(@RequestBody Lab obj)
     {
-        if(labMap.containsKey(obj.getName()))
-        {
-            return "Lab name already taken";
-        }
-        else
-        {
-            labMap.put(obj.getName(), obj);
-            return "Lab added";
-        }
+        LabList.add(obj);
     }
 }
