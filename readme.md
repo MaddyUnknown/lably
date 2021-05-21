@@ -1,6 +1,7 @@
 ## Prerequisites
 - Install Git (https://git-scm.com/download/)
 - Install Java 8 (https://adoptopenjdk.net/index.html?variant=openjdk8&jvmVariant=hotspot)
+- new Test line 
 
 ## 1. How to start
 ```
@@ -15,24 +16,39 @@ $ curl -v localhost:8080
 Swagger URL: http://localhost:8080/swagger-ui.html
 
 
-## Entities to create
+## 2. How to access H2 console
 
+Swagger URL: http://localhost:8080/database
+
+DI: 
+https://docs.spring.io/spring-boot/docs/2.0.x/reference/html/using-boot-spring-beans-and-dependency-injection.html
+
+
+Rest controller
 - Get
     - Path Param
     - Request Param
 - Post
     - Request Body
 
+## Spring data 
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
+- Inbuilt CRUD queries
+- Automatic Custom Queries
+- Manual Custom Queries
+
+## Entities to create
+
+### Lab
+ - String name
+ - String address
+ - String phone
+ - String pinCode
+
  ### Test
  - String name
  - String description
  - Double price
-
- ### Lab
- - String name
- - String address
- - String phone
- - String pincode
 
 
 ### Admin
@@ -52,27 +68,31 @@ Swagger URL: http://localhost:8080/swagger-ui.html
 ### Admin controller
  - Add Admin (POST) ("/addAdmin")
  - List of admins - Must return 5 admin objects (GET) ("/getAdmins")
- - Api to return single admin by username (GET)
+ - API to return single admin by username (GET)
 
 ### Lab controller
  - Add Lab (Post)
  - List of labs - Must return 5 labs in list (GET)
- - Api to return single lab by name (GET)
+ - API to return single lab by name (GET)
 
 
 ### Test controller
  - Add Test (Post)
  - List of Test - Must return 5 Test in list (GET)
- - Api to return single Test by name (GET)
+ - API to return single Test by name (GET)
 
 
  ### Customer controller
  - Add Customer (Post)
  - List of Customer - Must return 5 Customer in list (GET)
- - Api to return single Customer by username (GET)
+ - API to return single Customer by username (GET)
 
 ## Refs
  - How to create a new project : https://start.spring.io/
  - Spring Docs :  https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
 
  
+
+
+SELECT * from TBL_ADMIN WHERE department = 'CSE'
+SELECT admin FROM Admin admin WHERE admin.department = :department

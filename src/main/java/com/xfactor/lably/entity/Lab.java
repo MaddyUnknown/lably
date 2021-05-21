@@ -1,9 +1,24 @@
 package com.xfactor.lably.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tbl_lab")
 public class Lab{
+
+    @Id
+    @GeneratedValue
+    private Long id;
+    
     private String name;
+
     private String address;
+    
     private String phone;
+    
     private String pincode;
 
     public void setName(String name)
@@ -45,5 +60,13 @@ public class Lab{
     {
         return pincode;
     }
+
+    public Long getId() {
+        return id;
+    }
     
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }
